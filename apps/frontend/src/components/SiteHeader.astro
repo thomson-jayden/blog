@@ -1,5 +1,5 @@
 ---
-import { Menu, Search } from "lucide-react"
+import { Menu } from "lucide-react"
 import PageContainer from "@/components/PageContainer.astro"
 import SiteLogo from "@/components/SiteLogo.astro"
 import { withBase } from "@/lib/site"
@@ -16,6 +16,7 @@ const links = [
 ]
 ---
 
+<!-- TODO: Add site search once the search experience and indexing strategy are ready. -->
 <header class="border-b bg-background/95">
   <PageContainer>
     <div class="relative flex h-18 items-center justify-between">
@@ -41,9 +42,6 @@ const links = [
             </a>
           ))
         }
-        <button type="button" class="rounded-md p-1.5" aria-label="Search">
-          <Search size={19} />
-        </button>
       </nav>
 
       <details class="group sm:hidden">

@@ -1,10 +1,10 @@
 ---
-import { Code2, Rss } from "lucide-react"
 import PageContainer from "@/components/PageContainer.astro"
 import SiteLogo from "@/components/SiteLogo.astro"
 import { withBase } from "@/lib/site"
 ---
 
+<!-- TODO: Add GitHub and RSS links once their destinations and feed are ready. -->
 <footer class="border-t py-8">
   <PageContainer>
     <div
@@ -29,8 +29,6 @@ import { withBase } from "@/lib/site"
           href={withBase("/about")}
           class="text-muted-foreground hover:text-foreground">About</a
         >
-        <span class="rounded p-1" aria-label="GitHub"><Code2 size={17} /></span>
-        <span class="rounded p-1" aria-label="RSS feed"><Rss size={17} /></span>
       </div>
     </div>
   </PageContainer>
