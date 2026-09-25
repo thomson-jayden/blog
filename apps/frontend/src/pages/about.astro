@@ -1,4 +1,7 @@
 ---
+import AboutBio from "@/components/AboutBio.astro"
+import AboutHero from "@/components/AboutHero.astro"
+import AboutTopics from "@/components/AboutTopics.astro"
 import PageContainer from "@/components/PageContainer.astro"
 import SiteFooter from "@/components/SiteFooter.astro"
 import SiteHeader from "@/components/SiteHeader.astro"
@@ -12,14 +15,9 @@ import Layout from "@/layouts/main.astro"
   <SiteHeader active="about" />
   <main>
     <PageContainer>
-      <section class="grid min-h-[60vh] place-items-center py-20 text-center">
-        <div>
-          <p class="eyebrow">About me</p>
-          <h1 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
-            Coming soon
-          </h1>
-        </div>
-      </section>
+      <AboutHero />
+      <AboutBio />
+      <AboutTopics />
     </PageContainer>
   </main>
   <SiteFooter />

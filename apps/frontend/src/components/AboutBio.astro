@@ -1,0 +1,49 @@
+---
+import AboutSocialLinks from "@/components/AboutSocialLinks.astro"
+---
+
+<section
+  class="grid gap-8 border-b py-10 sm:py-12 lg:grid-cols-[1.35fr_0.8fr] lg:gap-12"
+>
+  <div>
+    <h2 class="text-2xl font-semibold tracking-tight">A bit about me</h2>
+    <div
+      class="mt-4 max-w-2xl space-y-3 text-base leading-6 text-muted-foreground"
+    >
+      <p>
+        I’m a software engineer based in Australia with a passion for building
+        useful things, exploring new places, and staying curious. I enjoy
+        working with modern technologies, learning about infrastructure and
+        cloud, and building personal projects outside of work.
+      </p>
+      <p>
+        When I’m not coding, you’ll probably find me rock climbing, planning my
+        next trip, playing games, or reading a good fantasy book.
+      </p>
+      <p>
+        I started this blog as a way to document what I’m learning, share useful
+        resources, and hopefully help others along the way.
+      </p>
+    </div>
+    <AboutSocialLinks />
+  </div>
+  <div
+    class="grid aspect-[4/3] place-items-center rounded-lg bg-muted text-muted-foreground"
+    role="img"
+    aria-label="Placeholder for a portrait"
+  >
+    <svg
+      aria-hidden="true"
+      class="size-28"
+      viewBox="0 0 112 112"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="56" cy="36" r="21" fill="currentColor" opacity=".45"></circle>
+      <path
+        d="M23 89c0-18 15-29 33-29s33 11 33 29v5H23v-5Z"
+        fill="currentColor"
+        opacity=".45"></path>
+    </svg>
+  </div>
+</section>
