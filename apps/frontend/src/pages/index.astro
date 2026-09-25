@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content"
 import HeroSection from "@/components/HeroSection.astro"
-import NewsletterSignup from "@/components/NewsletterSignup.astro"
 import PageContainer from "@/components/PageContainer.astro"
 import PostCard from "@/components/PostCard.astro"
 import PostGrid from "@/components/PostGrid.astro"
@@ -36,10 +35,6 @@ const recentPosts = posts
           {recentPosts.map((post) => <PostCard post={post} />)}
         </PostGrid>
       </section>
-
-      <div class="pb-16">
-        <NewsletterSignup />
-      </div>
     </PageContainer>
   </main>
   <SiteFooter />

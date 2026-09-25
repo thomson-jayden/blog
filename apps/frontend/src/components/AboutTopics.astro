@@ -1,0 +1,89 @@
+---
+import { BookOpen, Gamepad2, Laptop, Plane } from "lucide-react"
+
+const topics = [
+  {
+    title: "Software & Tech",
+    description: "Development, architecture, tools and things I’m learning.",
+    icon: Laptop,
+  },
+  {
+    title: "Travel",
+    description:
+      "Trip notes, itineraries and experiences from around the world.",
+    icon: Plane,
+  },
+  {
+    title: "Projects",
+    description: "Personal projects, homelabs, and side quests.",
+    icon: Gamepad2,
+  },
+  {
+    title: "Life",
+    description: "Fitness, books, hobbies and bits and pieces in between.",
+    icon: BookOpen,
+  },
+]
+---
+
+<section
+  class="grid gap-10 border-b py-10 sm:py-12 lg:grid-cols-[1.55fr_1fr] lg:gap-12"
+>
+  <div>
+    <h2 class="text-2xl font-semibold tracking-tight">What I write about</h2>
+    <div class="mt-6 grid gap-7 sm:grid-cols-2">
+      {
+        topics.map(({ title, description, icon: Icon }) => (
+          <div class="flex gap-4">
+            <div class="grid size-14 shrink-0 place-items-center rounded-lg bg-muted text-muted-foreground">
+              <Icon size={25} strokeWidth={1.7} />
+            </div>
+            <div>
+              <h3 class="font-semibold">{title}</h3>
+              <p class="mt-1 text-sm leading-5 text-muted-foreground">
+                {description}
+              </p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <aside class="border-t pt-8 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-8">
+    <h2 class="text-lg font-semibold tracking-tight">A few things I enjoy</h2>
+    <div class="mt-3 flex flex-wrap gap-2">
+      {
+        [
+          ".NET",
+          "Cloud",
+          "DevOps",
+          "Travel",
+          "Books",
+          "Coffee",
+          "Good Food",
+        ].map((item) => (
+          <span class="rounded-md bg-muted px-2.5 py-1 text-xs text-muted-foreground">
+            {item}
+          </span>
+        ))
+      }
+    </div>
+
+    <h2 class="mt-7 text-lg font-semibold tracking-tight">Currently</h2>
+    <ul class="mt-3 space-y-2 text-sm text-muted-foreground">
+      <li class="flex gap-3">
+        <span aria-hidden="true">●</span>Gold Coast, Australia
+      </li>
+      <li class="flex gap-3">
+        <span aria-hidden="true">●</span>Software Engineer at Steadfast Group
+      </li>
+      <li class="flex gap-3">
+        <span aria-hidden="true">●</span>BComp @ Griffith University
+      </li>
+      <li class="flex gap-3">
+        <span aria-hidden="true">●</span>Exploring, learning, and building
+      </li>
+    </ul>
+  </aside>
+</section>
