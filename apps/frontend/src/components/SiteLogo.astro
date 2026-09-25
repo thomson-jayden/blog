@@ -1,0 +1,22 @@
+---
+import { withBase } from "@/lib/site"
+
+interface Props {
+  size?: "header" | "footer"
+}
+
+const { size = "header" } = Astro.props
+const markClass = size === "footer" ? "size-6" : "size-7"
+const gapClass = size === "footer" ? "gap-2" : "gap-2.5"
+---
+
+<a
+  href={withBase("/")}
+  class:list={["flex items-center font-semibold", gapClass]}
+  aria-label="BlogName home"
+>
+  <!-- TODO: Replace the placeholder mark with the final site logo. -->
+  <span class:list={[markClass, "rounded-full bg-slate-500"]} aria-hidden="true"
+  ></span>
+  <span>BlogName</span>
+</a>

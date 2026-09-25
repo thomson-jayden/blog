@@ -1,6 +1,7 @@
 ---
 import { Code2, Rss } from "lucide-react"
 import PageContainer from "@/components/PageContainer.astro"
+import SiteLogo from "@/components/SiteLogo.astro"
 import { withBase } from "@/lib/site"
 ---
 
@@ -10,11 +11,7 @@ import { withBase } from "@/lib/site"
       class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between"
     >
       <div>
-        <a href={withBase("/")} class="flex items-center gap-2 font-semibold">
-          <span class="size-6 rounded-full bg-slate-500" aria-hidden="true"
-          ></span>
-          BlogName
-        </a>
+        <SiteLogo size="footer" />
         <p class="mt-2 text-sm text-muted-foreground">
           Thoughts, ideas, and projects.
         </p>
