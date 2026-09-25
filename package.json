@@ -1,0 +1,17 @@
+{
+  "name": "blog",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=frontend",
+    "build": "",
+    "preview": "",
+    "astro": "",
+    "lint": "",
+    "format": "",
+    "typecheck": "",
+    "dev-force": "npm run dev-force --workspace=frontend"
+  }
+}
