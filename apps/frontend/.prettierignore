@@ -1,5 +1,7 @@
 node_modules/
 coverage/
+.astro/
+dist/
 .pnpm-store/
 pnpm-lock.yaml
 package-lock.json
