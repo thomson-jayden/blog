@@ -4,7 +4,7 @@ These instructions apply to the entire repository.
 
 ## Repository Structure
 
-- `apps/<app-name>/` contains independently buildable and deployable units. Each direct child is one deployable application. The current examples are `apps/api/` and `apps/frontend/`.
+- `apps/<app-name>/` contains independently buildable and deployable units. Each direct child is one deployable application.
 - `.github/workflows/` contains GitHub Actions workflows for CI/CD pipelines.
 - `docs/` contains architecture, setup, operational, and other repository documentation.
 
