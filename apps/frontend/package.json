@@ -13,6 +13,7 @@
     "astro": "astro",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.{ts,tsx,astro}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,astro}\"",
     "typecheck": "astro check",
     "dev-force": "astro dev --force"
   },
@@ -36,6 +37,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9",
     "@eslint/js": "^10",
+    "@types/node": "^26.6.2",
     "eslint": "^10",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
