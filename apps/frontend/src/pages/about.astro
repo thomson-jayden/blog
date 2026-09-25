@@ -1,0 +1,26 @@
+---
+import PageContainer from "@/components/PageContainer.astro"
+import SiteFooter from "@/components/SiteFooter.astro"
+import SiteHeader from "@/components/SiteHeader.astro"
+import Layout from "@/layouts/main.astro"
+---
+
+<Layout
+  title="About — BlogName"
+  description="Learn more about the author of BlogName."
+>
+  <SiteHeader active="about" />
+  <main>
+    <PageContainer>
+      <section class="grid min-h-[60vh] place-items-center py-20 text-center">
+        <div>
+          <p class="eyebrow">About me</p>
+          <h1 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
+            Coming soon
+          </h1>
+        </div>
+      </section>
+    </PageContainer>
+  </main>
+  <SiteFooter />
+</Layout>

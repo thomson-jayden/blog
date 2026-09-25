@@ -1,0 +1,60 @@
+---
+import type { CollectionEntry } from "astro:content"
+import PostImage from "@/components/PostImage.astro"
+import PostMeta from "@/components/PostMeta.astro"
+import { withBase } from "@/lib/site"
+
+interface Props {
+  post: CollectionEntry<"blog">
+  variant?: "grid" | "horizontal" | "featured"
+}
+
+const { post, variant = "grid" } = Astro.props
+const href = withBase(`/posts/${post.id}`)
+---
+
+<article
+  class:list={[
+    "group min-w-0",
+    variant === "horizontal" &&
+      "grid gap-5 sm:grid-cols-[13rem_1fr] sm:items-center",
+    variant === "featured" &&
+      "grid gap-7 md:grid-cols-[1.1fr_1fr] md:items-center",
+  ]}
+  data-post-item
+  data-category={post.data.category}
+>
+  <a
+    href={href}
+    class:list={[
+      "block overflow-hidden rounded-lg bg-muted",
+      variant === "grid" && "aspect-[1.55]",
+      variant === "horizontal" && "aspect-[1.55] sm:aspect-[1.45]",
+      variant === "featured" && "aspect-[1.55]",
+    ]}
+    tabindex="-1"
+    aria-hidden="true"
+  >
+    <PostImage
+      alt=""
+      class="transition-transform duration-300 group-hover:scale-[1.02]"
+    />
+  </a>
+  <div class:list={[variant === "grid" && "mt-4"]}>
+    <p class="eyebrow">{post.data.category}</p>
+    <h3
+      class:list={[
+        "mt-2 leading-tight font-semibold tracking-tight",
+        variant === "featured" ? "text-2xl" : "text-lg",
+      ]}
+    >
+      <a href={href} class="hover:underline">{post.data.title}</a>
+    </h3>
+    <p class="mt-3 text-sm leading-6 text-muted-foreground">
+      {post.data.description}
+    </p>
+    <div class="mt-4">
+      <PostMeta date={post.data.publishDate} readTime={post.data.readTime} />
+    </div>
+  </div>
+</article>

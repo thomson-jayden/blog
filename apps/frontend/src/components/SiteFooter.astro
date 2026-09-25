@@ -1,0 +1,40 @@
+---
+import { Code2, Rss } from "lucide-react"
+import PageContainer from "@/components/PageContainer.astro"
+import { withBase } from "@/lib/site"
+---
+
+<footer class="border-t py-8">
+  <PageContainer>
+    <div
+      class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between"
+    >
+      <div>
+        <a href={withBase("/")} class="flex items-center gap-2 font-semibold">
+          <span class="size-6 rounded-full bg-slate-500" aria-hidden="true"
+          ></span>
+          BlogName
+        </a>
+        <p class="mt-2 text-sm text-muted-foreground">
+          Thoughts, ideas, and projects.
+        </p>
+      </div>
+      <div class="flex flex-wrap items-center gap-5 text-sm">
+        <a
+          href={withBase("/")}
+          class="text-muted-foreground hover:text-foreground">Home</a
+        >
+        <a
+          href={withBase("/posts")}
+          class="text-muted-foreground hover:text-foreground">Blog</a
+        >
+        <a
+          href={withBase("/about")}
+          class="text-muted-foreground hover:text-foreground">About</a
+        >
+        <span class="rounded p-1" aria-label="GitHub"><Code2 size={17} /></span>
+        <span class="rounded p-1" aria-label="RSS feed"><Rss size={17} /></span>
+      </div>
+    </div>
+  </PageContainer>
+</footer>
