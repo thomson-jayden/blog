@@ -1,0 +1,85 @@
+---
+import { Menu, Search } from "lucide-react"
+import PageContainer from "@/components/PageContainer.astro"
+import { withBase } from "@/lib/site"
+
+interface Props {
+  active?: "home" | "blog" | "about"
+}
+
+const { active } = Astro.props
+const links = [
+  { label: "Home", href: withBase("/"), key: "home" },
+  { label: "Blog", href: withBase("/posts"), key: "blog" },
+  { label: "About", href: withBase("/about"), key: "about" },
+]
+---
+
+<header class="border-b bg-background/95">
+  <PageContainer>
+    <div class="relative flex h-18 items-center justify-between">
+      <a
+        href={withBase("/")}
+        class="flex items-center gap-2.5 font-semibold"
+        aria-label="BlogName home"
+      >
+        <span class="size-7 rounded-full bg-slate-500" aria-hidden="true"
+        ></span>
+        <span>BlogName</span>
+      </a>
+
+      <nav
+        class="hidden items-center gap-8 text-sm sm:flex"
+        aria-label="Primary navigation"
+      >
+        {
+          links.map((link) => (
+            <a
+              href={link.href}
+              class:list={[
+                "transition-colors hover:text-foreground",
+                active === link.key
+                  ? "font-semibold text-foreground"
+                  : "text-muted-foreground",
+              ]}
+              aria-current={active === link.key ? "page" : undefined}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+        <button type="button" class="rounded-md p-1.5" aria-label="Search">
+          <Search size={19} />
+        </button>
+      </nav>
+
+      <details class="group sm:hidden">
+        <summary
+          class="flex cursor-pointer list-none rounded-md p-1.5"
+          aria-label="Open navigation menu"
+        >
+          <Menu size={22} />
+        </summary>
+        <nav
+          class="absolute top-14 right-0 z-20 flex min-w-40 flex-col rounded-lg border bg-background p-2 text-sm shadow-lg"
+          aria-label="Mobile navigation"
+        >
+          {
+            links.map((link) => (
+              <a
+                href={link.href}
+                class:list={[
+                  "rounded-md px-3 py-2 hover:bg-muted",
+                  active === link.key && "font-semibold",
+                ]}
+                aria-current={active === link.key ? "page" : undefined}
+              >
+                {link.label}
+              </a>
+            ))
+          }
+        </nav>
+      </details>
+    </div>
+  </PageContainer>
+</header>

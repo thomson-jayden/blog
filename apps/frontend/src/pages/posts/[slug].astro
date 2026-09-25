@@ -1,0 +1,88 @@
+---
+import type { GetStaticPaths } from "astro"
+import { getCollection, render, type CollectionEntry } from "astro:content"
+import AuthorByline from "@/components/AuthorByline.astro"
+import Breadcrumbs from "@/components/Breadcrumbs.astro"
+import PageContainer from "@/components/PageContainer.astro"
+import PostCard from "@/components/PostCard.astro"
+import PostGrid from "@/components/PostGrid.astro"
+import PostImage from "@/components/PostImage.astro"
+import SectionHeader from "@/components/SectionHeader.astro"
+import ShareLinks from "@/components/ShareLinks.astro"
+import SiteFooter from "@/components/SiteFooter.astro"
+import SiteHeader from "@/components/SiteHeader.astro"
+import Layout from "@/layouts/main.astro"
+import { withBase } from "@/lib/site"
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const posts = await getCollection("blog")
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }))
+}
+
+interface Props {
+  post: CollectionEntry<"blog">
+}
+
+const { post } = Astro.props
+const { Content } = await render(post)
+const allPosts = (await getCollection("blog"))
+  .filter((candidate) => candidate.id !== post.id)
+  .sort((a, b) => {
+    const categoryDifference =
+      Number(b.data.category === post.data.category) -
+      Number(a.data.category === post.data.category)
+    return (
+      categoryDifference ||
+      b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+    )
+  })
+const relatedPosts = allPosts.slice(0, 3)
+---
+
+<Layout
+  title={`${post.data.title} — BlogName`}
+  description={post.data.description}
+>
+  <SiteHeader active="blog" />
+  <main class="py-12 sm:py-16">
+    <PageContainer>
+      <article class="mx-auto max-w-4xl">
+        <Breadcrumbs category={post.data.category} title={post.data.title} />
+        <header class="mt-6">
+          <h1 class="max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">
+            {post.data.title}
+          </h1>
+          <p class="mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
+            {post.data.description}
+          </p>
+          <div
+            class="mt-7 flex flex-col gap-5 border-b pb-7 sm:flex-row sm:items-center sm:justify-between"
+          >
+            <AuthorByline
+              author={post.data.author}
+              date={post.data.publishDate}
+              readTime={post.data.readTime}
+            />
+            <ShareLinks />
+          </div>
+        </header>
+
+        <div class="mt-8 aspect-[16/8] overflow-hidden rounded-xl sm:mt-10">
+          <PostImage alt={`Cover image for ${post.data.title}`} />
+        </div>
+
+        <div class="article-content mx-auto mt-10 max-w-3xl">
+          <Content />
+        </div>
+      </article>
+
+      <section class="mx-auto mt-16 max-w-4xl border-t pt-10 sm:mt-20">
+        <SectionHeader title="Related posts" href={withBase("/posts")} />
+        <PostGrid>
+          {relatedPosts.map((relatedPost) => <PostCard post={relatedPost} />)}
+        </PostGrid>
+      </section>
+    </PageContainer>
+  </main>
+  <SiteFooter />
+</Layout>

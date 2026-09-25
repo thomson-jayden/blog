@@ -1,0 +1,28 @@
+---
+import { ChevronRight } from "lucide-react"
+import { withBase } from "@/lib/site"
+
+interface Props {
+  category: string
+  title: string
+}
+
+const { category, title } = Astro.props
+---
+
+<nav aria-label="Breadcrumb">
+  <ol class="flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
+    <li><a href={withBase("/posts")} class="hover:text-foreground">Blog</a></li>
+    <li aria-hidden="true"><ChevronRight size={13} /></li>
+    <li>
+      <a
+        href={`${withBase("/posts")}?category=${encodeURIComponent(category)}`}
+        class="hover:text-foreground">{category}</a
+      >
+    </li>
+    <li aria-hidden="true"><ChevronRight size={13} /></li>
+    <li class="max-w-52 truncate text-foreground" aria-current="page">
+      {title}
+    </li>
+  </ol>
+</nav>

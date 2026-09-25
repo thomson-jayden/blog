@@ -1,0 +1,17 @@
+---
+import { withBase } from "@/lib/site"
+
+interface Props {
+  alt: string
+  class?: string
+}
+
+const { alt, class: className = "" } = Astro.props
+---
+
+<img
+  src={withBase("/images/post-placeholder.svg")}
+  alt={alt}
+  class:list={["h-full w-full object-cover", className]}
+  loading="lazy"
+/>
