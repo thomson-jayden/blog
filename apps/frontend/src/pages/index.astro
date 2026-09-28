@@ -1,8 +1,48 @@
 ---
-import DesignShowcase from '../components/DesignShowcase';
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
+import PostCard from '../components/PostCard.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import { featuredPost, pageUrl, sortPosts } from '../lib/blog';
+const posts = sortPosts(await getCollection('blog'));
+const featured = featuredPost(posts);
+const recent = posts.filter((post) => post.id !== featured?.id).slice(0, 3);
 ---
 
 <Layout>
-  <DesignShowcase client:load />
+  <div class="container">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Thoughts, ideas, and projects</p>
+        <h1>A blog about tech, travel and everything in between.</h1>
+        <p>
+          I write about the things I'm learning, building, exploring and
+          enjoying along the way.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href={pageUrl('/posts/')}>
+            View all posts
+          </a>
+          <a class="button secondary" href={pageUrl('/about/')}>
+            About me
+          </a>
+        </div>
+      </div>
+      <div class="visual" aria-label="Decorative landscape illustration"></div>
+    </section>
+    {featured && (
+      <section class="page-section">
+        <SectionHeader title="Featured post" />
+        <PostCard post={featured} variant="featured" />
+      </section>
+    )}
+    <section class="page-section">
+      <SectionHeader title="Recent posts" href={pageUrl('/posts/')} />
+      <div class="grid grid-3">
+        {recent.map((post) => (
+          <PostCard post={post} />
+        ))}
+      </div>
+    </section>
+  </div>
 </Layout>

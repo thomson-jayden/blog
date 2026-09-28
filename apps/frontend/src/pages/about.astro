@@ -1,0 +1,63 @@
+---
+import Layout from '../layouts/Layout.astro';
+const topics = [
+  ['Software & Tech', 'Code, tools, infrastructure and modern craft.'],
+  ['Travel', 'Places, spaces, experiences and the stories they leave behind.'],
+  ['Projects', 'Builds, experiments and side projects in progress.'],
+  ['Life', 'Health, habits, mindset and the everyday things I enjoy.'],
+];
+const interests = ['Reading', 'Hiking', 'Rock climbing', 'D&D', 'Yoga', 'Pool'];
+---
+
+<Layout active="about">
+  <div class="container">
+    <section class="page-section about-grid">
+      <div>
+        <p class="eyebrow">About</p>
+        <h1>Hi, I'm Jayden.</h1>
+        <p class="muted">
+          I'm a software engineer, traveller, and lifelong learner. I write
+          about the things I'm passionate about — from building cool projects to
+          exploring new places and finding balance in life.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="mailto:hello@example.com">
+            Say hello
+          </a>
+          <a
+            class="button secondary"
+            href="https://www.linkedin.com"
+            target="_blank"
+            rel="noreferrer"
+          >
+            LinkedIn
+          </a>
+        </div>
+      </div>
+      <div class="visual" aria-label="Decorative portrait placeholder"></div>
+    </section>
+    <section class="page-section">
+      <div class="section-heading">
+        <h2>A bit about me</h2>
+      </div>
+      <div class="topic-grid">
+        {topics.map(([title, copy]) => (
+          <div class="topic">
+            <h3>{title}</h3>
+            <p>{copy}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+    <section class="page-section">
+      <div class="section-heading">
+        <h2>A few things I enjoy</h2>
+      </div>
+      <div class="chips">
+        {interests.map((interest) => (
+          <span class="chip">{interest}</span>
+        ))}
+      </div>
+    </section>
+  </div>
+</Layout>
