@@ -1,0 +1,42 @@
+---
+import type { BlogPost } from '../lib/blog';
+import { formatDate, pageUrl } from '../lib/blog';
+
+interface Props {
+  post: BlogPost;
+  variant?: 'standard' | 'featured' | 'horizontal';
+}
+const { post, variant = 'standard' } = Astro.props;
+const href = pageUrl(`/posts/${post.id}/`);
+---
+
+<article
+  class:list={[
+    'post-card',
+    variant === 'horizontal' && 'list-card',
+    variant === 'featured' && 'featured-card',
+  ]}
+  data-category={post.data.category}
+>
+  <a href={href} class="post-image" aria-label={`Read ${post.data.title}`}>
+    <span class="sr-only">{post.data.title}</span>
+  </a>
+  <a class="post-card-body" href={href}>
+    <div class="post-meta">
+      <span>{post.data.category}</span>
+      <span>·</span>
+      <time datetime={post.data.publishDate.toISOString()}>
+        {formatDate(post.data.publishDate)}
+      </time>
+      <span>·</span>
+      <span>{post.data.readTime} min read</span>
+    </div>
+    <h2 class="post-title">{post.data.title}</h2>
+    <p class="post-description">{post.data.description}</p>
+  </a>
+  {variant === 'horizontal' && (
+    <a class="arrow" href={href} aria-label={`Read ${post.data.title}`}>
+      →
+    </a>
+  )}
+</article>

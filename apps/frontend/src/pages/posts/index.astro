@@ -1,0 +1,132 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import PostCard from '../../components/PostCard.astro';
+import CategoryFilters from '../../components/CategoryFilters.astro';
+import Pagination from '../../components/Pagination.astro';
+import { sortPosts } from '../../lib/blog';
+
+const allPosts = sortPosts(await getCollection('blog'));
+const totalPages = Math.max(1, Math.ceil(allPosts.length / 4));
+---
+
+<Layout active="blog">
+  <div class="container">
+    <section class="page-intro">
+      <p class="eyebrow">Blog</p>
+      <h1>All posts</h1>
+      <p class="muted">
+        Thoughts, ideas and updates across tech, travel, projects and life.
+      </p>
+      <CategoryFilters />
+      <p id="result-summary" class="result-summary" aria-live="polite"></p>
+    </section>
+    <section id="post-list" class="list" aria-label="Posts">
+      {allPosts.map((post) => (
+        <div data-post-card data-category={post.data.category}>
+          <PostCard post={post} variant="horizontal" />
+        </div>
+      ))}
+      <p id="empty-state" class="muted" hidden>
+        No posts match this category.
+      </p>
+      <noscript>
+        <style>
+          [data-post-card] {
+            display: block;
+          }
+        </style>
+      </noscript>
+    </section>
+    <div id="pagination">
+      <Pagination page={1} totalPages={totalPages} />
+    </div>
+  </div>
+
+  <script is:inline>
+    (function () {
+      const pageSize = 4;
+      const valid = ['All', 'Tech', 'Travel', 'Projects', 'Life'];
+      const params = new URLSearchParams(window.location.search);
+      const requestedCategory = params.get('category') || 'All';
+      const category =
+        valid.indexOf(requestedCategory) !== -1 ? requestedCategory : 'All';
+      const requestedPage = Number(params.get('page') || '1');
+
+      const cards = Array.prototype.slice.call(
+        document.querySelectorAll('[data-post-card]'),
+      );
+      const matching = cards.filter(function (card) {
+        return category === 'All' || card.dataset.category === category;
+      });
+      const totalPages = Math.max(1, Math.ceil(matching.length / pageSize));
+      const page = Math.min(
+        Math.max(
+          Number.isFinite(requestedPage) ? Math.floor(requestedPage) : 1,
+          1,
+        ),
+        totalPages,
+      );
+
+      matching.forEach(function (card, index) {
+        if (index >= (page - 1) * pageSize && index < page * pageSize) {
+          card.setAttribute('data-visible', '');
+        }
+      });
+
+      Array.prototype.forEach.call(
+        document.querySelectorAll('.filter'),
+        function (filter) {
+          const label = (filter.textContent || '').trim();
+          filter.setAttribute('aria-pressed', String(label === category));
+        },
+      );
+
+      const summary = document.getElementById('result-summary');
+      if (summary) {
+        summary.textContent =
+          matching.length + (matching.length === 1 ? ' post' : ' posts');
+      }
+
+      const emptyState = document.getElementById('empty-state');
+      if (emptyState) emptyState.hidden = matching.length > 0;
+
+      const pagination = document.getElementById('pagination');
+      if (pagination) {
+        Array.prototype.forEach.call(
+          pagination.querySelectorAll('a'),
+          function (link) {
+            const label = link.getAttribute('aria-label');
+            const number = Number(link.textContent);
+            const target =
+              label === 'Previous page'
+                ? Math.max(1, page - 1)
+                : label === 'Next page'
+                  ? Math.min(totalPages, page + 1)
+                  : number;
+
+            const next = new URL(window.location.href);
+            if (category === 'All') next.searchParams.delete('category');
+            else next.searchParams.set('category', category);
+            if (target === 1) next.searchParams.delete('page');
+            else next.searchParams.set('page', String(target));
+            link.href = next.toString();
+
+            if (!label) link.hidden = number > totalPages;
+            link.classList.toggle('current', !label && target === page);
+            link.classList.toggle(
+              'disabled',
+              (label === 'Previous page' && page === 1) ||
+                (label === 'Next page' && page === totalPages),
+            );
+            if (!label && target === page)
+              link.setAttribute('aria-current', 'page');
+            else link.removeAttribute('aria-current');
+          },
+        );
+      }
+
+      document.documentElement.setAttribute('data-posts-ready', '');
+    })();
+  </script>
+</Layout>

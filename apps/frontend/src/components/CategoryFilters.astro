@@ -1,0 +1,21 @@
+---
+import { categories, pageUrl } from '../lib/blog';
+const current = Astro.url.searchParams.get('category') ?? 'All';
+const options = ['All', ...categories];
+---
+
+<div class="filters" aria-label="Filter posts by category">
+  {options.map((category) => {
+    const params = new URLSearchParams();
+    if (category !== 'All') params.set('category', category);
+    return (
+      <a
+        class="filter"
+        href={`${pageUrl('/posts/')}${params.size ? `?${params}` : ''}`}
+        aria-pressed={current === category}
+      >
+        {category}
+      </a>
+    );
+  })}
+</div>

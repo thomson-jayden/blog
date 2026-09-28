@@ -1,0 +1,44 @@
+---
+interface Props {
+  page: number;
+  totalPages: number;
+  category?: string;
+}
+const { page, totalPages, category } = Astro.props;
+function href(next: number) {
+  const params = new URLSearchParams();
+  if (category) params.set('category', category);
+  if (next > 1) params.set('page', String(next));
+  return `${import.meta.env.BASE_URL.replace(/\/$/, '')}/posts/${params.size ? `?${params}` : ''}`;
+}
+---
+
+{totalPages > 1 && (
+  <nav class="pagination" aria-label="Pagination">
+    <a
+      class:list={{ disabled: page === 1 }}
+      href={href(Math.max(1, page - 1))}
+      aria-label="Previous page"
+    >
+      ‹
+    </a>
+    {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+      (number) => (
+        <a
+          class:list={{ current: number === page }}
+          href={href(number)}
+          aria-current={number === page ? 'page' : undefined}
+        >
+          {number}
+        </a>
+      ),
+    )}
+    <a
+      class:list={{ disabled: page === totalPages }}
+      href={href(Math.min(totalPages, page + 1))}
+      aria-label="Next page"
+    >
+      ›
+    </a>
+  </nav>
+)}

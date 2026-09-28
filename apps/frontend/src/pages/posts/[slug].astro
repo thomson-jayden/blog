@@ -1,0 +1,78 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import PostCard from '../../components/PostCard.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import { formatDate, pageUrl, relatedPosts } from '../../lib/blog';
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post, posts },
+  }));
+}
+const { post, posts } = Astro.props;
+const { Content } = await render(post);
+const related = relatedPosts(post, posts);
+---
+
+<Layout
+  title={`${post.data.title} — Jayden Thomson`}
+  description={post.data.description}
+  active="blog"
+>
+  <div class="container article">
+    <div class="breadcrumbs">
+      <a href={pageUrl('/posts/')}>Blog</a> /{' '}
+      <a href={`${pageUrl('/posts/')}?category=${post.data.category}`}>
+        {post.data.category}
+      </a>{' '}
+      / {post.data.title}
+    </div>
+    <header class="article-header">
+      <p class="eyebrow">{post.data.category}</p>
+      <h1>{post.data.title}</h1>
+      <p class="muted">{post.data.description}</p>
+      <div class="byline">
+        <span class="avatar">JT</span>
+        <span>
+          {post.data.author}
+          <br />
+          <time datetime={post.data.publishDate.toISOString()}>
+            {formatDate(post.data.publishDate)} · {post.data.readTime} min read
+          </time>
+        </span>
+        <span class="share-links">
+          <a
+            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(Astro.url.href)}`}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Share on LinkedIn"
+          >
+            in
+          </a>
+          <a
+            href={`mailto:?subject=${encodeURIComponent(post.data.title)}&body=${encodeURIComponent(Astro.url.href)}`}
+            aria-label="Share by email"
+          >
+            @
+          </a>
+        </span>
+      </div>
+    </header>
+    <div class="post-image article-hero" aria-label={post.data.title}></div>
+    <article class="article-content">
+      <Content />
+    </article>
+    {related.length > 0 && (
+      <section class="page-section">
+        <SectionHeader title="Related posts" />
+        <div class="grid grid-3">
+          {related.map((item) => (
+            <PostCard post={item} />
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+</Layout>
