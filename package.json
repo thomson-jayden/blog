@@ -1,0 +1,22 @@
+{
+    "name": "astro-skeleton",
+    "private": true,
+    "workspaces": [
+        "apps/*"
+    ],
+    "scripts": {
+        "dev": "npm run dev --workspace=frontend",
+        "dev-force": "npm run dev-force --workspace=frontend",
+        "build": "npm run build --workspace=frontend",
+        "preview": "npm run preview --workspace=frontend",
+        "astro": "npm run astro --workspace=frontend",
+        "test:e2e": "npm run test:e2e --workspace=frontend",
+        "format": "npm run format --workspace=frontend",
+        "format:check": "npm run format:check --workspace=frontend",
+        "lint": "npm run lint --workspace=frontend",
+        "typecheck": "npm run typecheck --workspace=frontend"
+    },
+    "devDependencies": {
+        "@playwright/test": "^1.63.0"
+    }
+}
