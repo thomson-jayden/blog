@@ -1,5 +1,6 @@
 // @ts-check
 import react from '@astrojs/react';
+import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 import { loadEnv } from 'vite';
 
@@ -13,4 +14,7 @@ export default defineConfig({
   site: SITE_URL,
   base: BASE_PATH,
   integrations: [react()],
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });
